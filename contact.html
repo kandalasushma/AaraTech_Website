@@ -54,15 +54,6 @@
 document.getElementById("contactForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
-<<<<<<< HEAD
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const subject = document.getElementById("subject").value;
-    const message = document.getElementById("message").value;
-
-    try {
-        const response = await fetch("http://localhost:5000/api/contact", {
-=======
     const data = {
         name: document.getElementById("name").value,
         email: document.getElementById("email").value,
@@ -71,47 +62,26 @@ document.getElementById("contactForm").addEventListener("submit", async function
     };
 
     try {
-        const response = await fetch("http://localhost:5000/contact", {
->>>>>>> 5c22e46 (Intial commit)
+        const response = await fetch("http://localhost:5000/api/contact", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-<<<<<<< HEAD
-            body: JSON.stringify({
-                name,
-                email,
-                subject,
-                message
-            })
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-            alert("Message submitted successfully ✅");
-            document.getElementById("contactForm").reset();
-        } else {
-            alert("Failed to submit ❌");
-        }
-
-    } catch (error) {
-        console.log(error);
-        alert("Server error ❌");
-=======
             body: JSON.stringify(data)
         });
 
         const result = await response.json();
 
-        alert(result.message);
-
-        document.getElementById("contactForm").reset();
+        if (result.success) {
+            alert("Message submitted successfully ✅");
+            document.getElementById("contactForm").reset();
+        } else {
+            alert(result.message || "Failed to submit ❌");
+        }
 
     } catch (error) {
-        console.log(error);
-        alert("Error sending message");
->>>>>>> 5c22e46 (Intial commit)
+        console.error(error);
+        alert("Server error ❌");
     }
 });
 </script>
