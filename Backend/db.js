@@ -1,16 +1,17 @@
-const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose");
 
-const uri = "mongodb+srv://kandalasushma17_db_user:123@cluster0.hpoorzg.mongodb.net/?appName=Cluster0";
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
-const client = new MongoClient(uri);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.error("Database connection failed:", error.message);
+    process.exit(1);
+  }
+};
 
-async function connectDB() {
-    try {
-        await client.connect();
-        console.log("MongoDB Connected");
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-connectDB();
+module.exports = connectDB;

@@ -54,31 +54,37 @@
 document.getElementById("contactForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
-    const data = {
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
-        subject: document.getElementById("subject").value,
-        message: document.getElementById("message").value
-    };
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const subject = document.getElementById("subject").value;
+    const message = document.getElementById("message").value;
 
     try {
-        const response = await fetch("http://localhost:5000/contact", {
+        const response = await fetch("http://localhost:5000/api/contact", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify({
+                name,
+                email,
+                subject,
+                message
+            })
         });
 
-        const result = await response.json();
+        const data = await response.json();
 
-        alert(result.message);
-
-        document.getElementById("contactForm").reset();
+        if (data.success) {
+            alert("Message submitted successfully ✅");
+            document.getElementById("contactForm").reset();
+        } else {
+            alert("Failed to submit ❌");
+        }
 
     } catch (error) {
         console.log(error);
-        alert("Error sending message");
+        alert("Server error ❌");
     }
 });
 </script>
