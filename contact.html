@@ -54,6 +54,7 @@
 document.getElementById("contactForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
+<<<<<<< HEAD
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const subject = document.getElementById("subject").value;
@@ -61,10 +62,22 @@ document.getElementById("contactForm").addEventListener("submit", async function
 
     try {
         const response = await fetch("http://localhost:5000/api/contact", {
+=======
+    const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        subject: document.getElementById("subject").value,
+        message: document.getElementById("message").value
+    };
+
+    try {
+        const response = await fetch("http://localhost:5000/contact", {
+>>>>>>> 5c22e46 (Intial commit)
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
+<<<<<<< HEAD
             body: JSON.stringify({
                 name,
                 email,
@@ -85,6 +98,20 @@ document.getElementById("contactForm").addEventListener("submit", async function
     } catch (error) {
         console.log(error);
         alert("Server error ❌");
+=======
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        alert(result.message);
+
+        document.getElementById("contactForm").reset();
+
+    } catch (error) {
+        console.log(error);
+        alert("Error sending message");
+>>>>>>> 5c22e46 (Intial commit)
     }
 });
 </script>
